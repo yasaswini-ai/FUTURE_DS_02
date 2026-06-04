@@ -1,0 +1,28 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+# Sample Customer Data
+data = {
+    "CustomerID": [101, 102, 103, 104, 105, 106, 107, 108],
+    "Subscription_Months": [24, 12, 6, 36, 18, 4, 30, 8],
+    "Monthly_Spend": [500, 300, 200, 700, 450, 150, 650, 250],
+    "Churn": ["No", "Yes", "Yes", "No", "No", "Yes", "No", "Yes"]
+}
+df = pd.DataFrame(data)
+# Churn Rate
+churn_rate = (df["Churn"] == "Yes").mean() * 100
+print("Customer Churn Rate: {:.2f}%".format(churn_rate))
+# Average Subscription Duration
+avg_subscription = df["Subscription_Months"].mean()
+print("Average Subscription Duration:", avg_subscription)
+# Customer Lifetime Value
+df["Lifetime_Value"] = df["Subscription_Months"] * df["Monthly_Spend"]
+avg_ltv = df["Lifetime_Value"].mean()
+print("Average Customer Lifetime Value:", avg_ltv)
+# Churn Distribution
+churn_counts = df["Churn"].value_counts()
+plt.figure(figsize=(6,4))
+churn_counts.plot(kind="bar")
+plt.title("Customer Churn Distribution")
+plt.xlabel("Churn Status")
+plt.ylabel("Number of Customers")
+plt.show()
